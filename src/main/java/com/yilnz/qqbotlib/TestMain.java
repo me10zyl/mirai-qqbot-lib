@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
 
+/**
+ * https://github.com/project-mirai/mirai-api-http/blob/master/docs/adapter/HttpAdapter.md
+ */
 public class TestMain {
     public static void main(String[] args) throws IOException {
         Properties properties = new Properties();
