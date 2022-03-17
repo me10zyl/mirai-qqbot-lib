@@ -1,5 +1,6 @@
 package com.yilnz.qqbotlib.util;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.yilnz.qqbotlib.entity.QQFriend;
@@ -89,7 +90,7 @@ public class ApiUtil {
             log.error(s);
             throw new MiraiError(s);
         }
-        return page.getHtml().selectJson("$.data").get();
+        return ((JSONObject)JSON.parse(page.getHtml().get())).getString("data");
     }
 
     private <T> List<T> doGetList(String sessionKey, String url, String errorMsg, Class<T> tClass){
