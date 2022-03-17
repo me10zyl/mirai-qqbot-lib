@@ -50,21 +50,25 @@ public class QQBot {
             messageThread.scheduleAtFixedRate(new Runnable() {
                 @Override
                 public void run() {
-                    int count = apiUtil.countMessage(sessionKey);
-                    log.info("qqbot count message {}", count);
-                    if(count > 0){
-                        String s = apiUtil.fetchMessage(sessionKey);
-                        log.info("fetched message {}", s);
-                        PlainText plainText = new PlainText(s);
-                        plainText.nodes().forEach(data->{
-                            String type = data.selectJson("type").get();
-                            msgJsonHandlerList.forEach(handler->{
-                                if(handler.support(type)){
-                                    log.info("handle message {}", s);
-                                    handler.handle(data.get(), listener);
-                                }
+                    try {
+                        int count = apiUtil.countMessage(sessionKey);
+                        log.info("qqbot count message {}", count);
+                        if(count > 0){
+                            String s = apiUtil.fetchMessage(sessionKey);
+                            log.info("fetched message {}", s);
+                            PlainText plainText = new PlainText(s);
+                            plainText.nodes().forEach(data->{
+                                String type = data.selectJson("type").get();
+                                msgJsonHandlerList.forEach(handler->{
+                                    if(handler.support(type)){
+                                        log.info("handle message {}", s);
+                                        handler.handle(data.get(), listener);
+                                    }
+                                });
                             });
-                        });
+                        }
+                    } catch (Exception e) {
+                        log.error("qqbot message cycle error", e);
                     }
                 }
             }, 0, 1, TimeUnit.SECONDS);
