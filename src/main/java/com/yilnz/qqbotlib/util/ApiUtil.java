@@ -69,6 +69,9 @@ public class ApiUtil {
         r.setBody(body);
         Page page = SurfSpider.create().addRequest(r).request().get(0);
         Integer code = page.getHtml().selectJson("$.code").getInt();
+        if(page.getStatusCode() != 200){
+            throw new MiraiError("doPost with url " + url + " return statusCode:" +page.getStatusCode());
+        }
         return code == 0;
     }
 
