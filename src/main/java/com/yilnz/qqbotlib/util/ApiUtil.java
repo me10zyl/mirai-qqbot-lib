@@ -64,7 +64,7 @@ public class ApiUtil {
     }
 
     public boolean doPost(String sessionKey, String url, String body){
-        log.info("sendPost:" + url + "," + body);
+        //log.info("sendPost:" + url + "," + body);
         SurfHttpRequest r = new SurfHttpRequestBuilder(baseUrl + url, "POST").build();
         r.addHeader("sessionKey", sessionKey);
         r.setBody(body);

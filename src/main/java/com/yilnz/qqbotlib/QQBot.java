@@ -48,7 +48,7 @@ public class QQBot {
     public void onMessageReceived(QQMessageListener listener){
         if(messageThread == null) {
             messageThread = Executors.newSingleThreadScheduledExecutor();
-            log.info("qqbot start message receiving");
+            log.debug("qqbot start message receiving");
             messageThread.scheduleAtFixedRate(new Runnable() {
                 @Override
                 public void run() {
@@ -57,14 +57,14 @@ public class QQBot {
 //                        log.info("qqbot count message {}", count);
                         if(count > 0){
                             String s = apiUtil.fetchMessage(sessionKey);
-                            log.info("fetched message {}", s);
+                            log.debug("fetched message {}", s);
                             JSONArray array = JSONArray.parseArray(s);
                             array.forEach(data->{
                                 String type = ((JSONObject)data).getString("type");
-                                log.info("start handle message type {}", type);
+                                log.debug("start handle message type {}", type);
                                 msgJsonHandlerList.forEach(handler->{
                                     if(handler.support(type)){
-                                        log.info("handle message {}", s);
+                                        log.debug("handle message {}", s);
                                         handler.handle(data.toString(), listener);
                                     }
                                 });
