@@ -72,6 +72,7 @@ public class ApiUtil {
         if(page.getStatusCode() != 200){
             throw new MiraiError("doPost with url " + url + " return statusCode:" +page.getStatusCode());
         }
+        log.info("doPostResult:" + page.getHtml());
         return code == 0;
     }
 
