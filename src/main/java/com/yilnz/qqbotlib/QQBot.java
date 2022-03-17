@@ -46,10 +46,12 @@ public class QQBot {
     public void onMessageReceived(QQMessageListener listener){
         if(messageThread == null) {
             messageThread = Executors.newSingleThreadScheduledExecutor();
+            log.info("qqbot start message receiving");
             messageThread.scheduleAtFixedRate(new Runnable() {
                 @Override
                 public void run() {
                     int count = apiUtil.countMessage(sessionKey);
+                    log.info("qqbot count message {}", count);
                     if(count > 0){
                         String s = apiUtil.fetchMessage(sessionKey);
                         PlainText plainText = new PlainText(s);
