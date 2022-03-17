@@ -1,3 +1,3 @@
 target
 .idea
-src/main/java/com/yilnz/qqbotlib/TestMain.java
+src/main/resources/app.properties
