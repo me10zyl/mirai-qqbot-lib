@@ -34,8 +34,8 @@ public class QQBot {
         msgJsonHandlerList.add(new FirendJsonHandler());
     }
 
-    public void sendMessage(String targetQQ, List<QQMessage> qqMessageList){
-        apiUtil.sendFriendMessage(sessionKey, targetQQ, qqMessageList);
+    public boolean sendMessage(String targetQQ, List<QQMessage> qqMessageList){
+        return apiUtil.sendFriendMessage(sessionKey, targetQQ, qqMessageList);
     }
 
     public void stop(){
