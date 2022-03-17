@@ -54,11 +54,13 @@ public class QQBot {
                     log.info("qqbot count message {}", count);
                     if(count > 0){
                         String s = apiUtil.fetchMessage(sessionKey);
+                        log.info("fetched message {}", s);
                         PlainText plainText = new PlainText(s);
                         plainText.nodes().forEach(data->{
                             String type = data.selectJson("type").get();
                             msgJsonHandlerList.forEach(handler->{
                                 if(handler.support(type)){
+                                    log.info("handle message {}", s);
                                     handler.handle(data.get(), listener);
                                 }
                             });
