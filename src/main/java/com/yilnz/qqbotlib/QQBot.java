@@ -54,7 +54,7 @@ public class QQBot {
                 public void run() {
                     try {
                         int count = apiUtil.countMessage(sessionKey);
-                        log.info("qqbot count message {}", count);
+//                        log.info("qqbot count message {}", count);
                         if(count > 0){
                             String s = apiUtil.fetchMessage(sessionKey);
                             log.info("fetched message {}", s);

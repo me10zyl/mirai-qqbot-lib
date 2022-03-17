@@ -21,7 +21,7 @@ public class TestMain {
         qqbot.onMessageReceived(new QQMessageListener() {
             @Override
             public void onReceivedFirendMessage(FriendMessage friendMessage) {
-                System.out.println(JSON.toJSONString(friendMessage));
+                System.out.println("收到消息：" + JSON.toJSONString(friendMessage));
                 if(friendMessage.getMessage().equals("你好")){
                     List<QQMessage> qqMessages = new ArrayList<>();
                     qqMessages.add(QQMessage.textMessage("你好鸭！"));
