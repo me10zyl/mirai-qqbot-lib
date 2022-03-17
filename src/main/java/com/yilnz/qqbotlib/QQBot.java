@@ -59,6 +59,7 @@ public class QQBot {
                             PlainText plainText = new PlainText(s);
                             plainText.nodes().forEach(data->{
                                 String type = data.selectJson("type").get();
+                                log.info("start handle message type {}", type);
                                 msgJsonHandlerList.forEach(handler->{
                                     if(handler.support(type)){
                                         log.info("handle message {}", s);
