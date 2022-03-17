@@ -26,7 +26,7 @@ public class ApiUtil {
     }
 
     public String newSession(String verifyKey){
-        SurfHttpRequest r = new SurfHttpRequestBuilder(baseUrl, "POST").build();
+        SurfHttpRequest r = new SurfHttpRequestBuilder(baseUrl + "/verify", "POST").build();
         r.setBody("{\"verifyKey\": \"" + verifyKey + "\"}");
         Page page = SurfSpider.create().addRequest(r).request().get(0);
         log.info("newSession:" + page.getStatusCode());
