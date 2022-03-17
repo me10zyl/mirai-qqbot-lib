@@ -3,6 +3,7 @@ package com.yilnz.qqbotlib.util;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.yilnz.qqbotlib.entity.QQFriend;
+import com.yilnz.qqbotlib.entity.QQMessage;
 import com.yilnz.qqbotlib.exception.MiraiError;
 import com.yilnz.surfing.core.SurfHttpRequest;
 import com.yilnz.surfing.core.SurfHttpRequestBuilder;
@@ -53,6 +54,21 @@ public class ApiUtil {
         return doGetList(sessionKey, "/friendList", "获取朋友列表失败", QQFriend.class);
     }
 
+    public boolean sendFriendMessage(String sessionKey, String targetQQ, List<QQMessage> qqMessages){
+        return doPost(sessionKey,"/sendFriendMessage",  String.format( "{\n" +
+                "  \"target\":%s,\n" +
+                "  \"messageChain\": %s\n", targetQQ, JSONArray.toJSONString(qqMessages)));
+    }
+
+    public boolean doPost(String sessionKey, String url, String body){
+        SurfHttpRequest r = new SurfHttpRequestBuilder(baseUrl + url, "POST").build();
+        r.addHeader("sessionKey", sessionKey);
+        r.setBody(body);
+        Page page = SurfSpider.create().addRequest(r).request().get(0);
+        Integer code = page.getHtml().selectJson("$.code").getInt();
+        return code == 0;
+    }
+
     public int countMessage(String sessionKey){
         return Integer.parseInt(doGet(sessionKey, "/countMessage", "countMessage失败"));
     }
@@ -85,5 +101,9 @@ public class ApiUtil {
             throw new MiraiError(s);
         }
         return JSONArray.parseArray(page.getHtml().selectJson("$.data").get(),  tClass);
+    }
+
+    public void release(String sessionKey) {
+        doPost(sessionKey, "/release", null);
     }
 }

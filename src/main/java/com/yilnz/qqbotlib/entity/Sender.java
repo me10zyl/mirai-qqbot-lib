@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class Sender {
-    private String qq;
+    private String id;
     private String nickname;
     private String remark;
 }
