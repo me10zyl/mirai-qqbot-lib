@@ -1,5 +1,7 @@
 package com.yilnz.qqbotlib;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.yilnz.qqbotlib.entity.QQMessage;
 import com.yilnz.qqbotlib.services.FirendJsonHandler;
 import com.yilnz.qqbotlib.services.MsgJsonHandler;
@@ -56,14 +58,14 @@ public class QQBot {
                         if(count > 0){
                             String s = apiUtil.fetchMessage(sessionKey);
                             log.info("fetched message {}", s);
-                            PlainText plainText = new PlainText(s);
-                            plainText.nodes().forEach(data->{
-                                String type = data.selectJson("type").get();
+                            JSONArray array = JSONArray.parseArray(s);
+                            array.forEach(data->{
+                                String type = ((JSONObject)data).getString("type");
                                 log.info("start handle message type {}", type);
                                 msgJsonHandlerList.forEach(handler->{
                                     if(handler.support(type)){
                                         log.info("handle message {}", s);
-                                        handler.handle(data.get(), listener);
+                                        handler.handle(data.toString(), listener);
                                     }
                                 });
                             });
