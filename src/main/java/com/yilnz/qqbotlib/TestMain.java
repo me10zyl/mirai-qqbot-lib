@@ -25,7 +25,7 @@ public class TestMain {
                 if(friendMessage.getMessage().equals("你好")){
                     List<QQMessage> qqMessages = new ArrayList<>();
                     qqMessages.add(QQMessage.textMessage("你好鸭！"));
-                    qqbot.sendMessage(friendMessage.getSender().getId(), qqMessages);
+                    qqbot.sendFriendMessage(friendMessage.getSender().getId(), qqMessages);
                 }
             }
         });

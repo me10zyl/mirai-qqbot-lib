@@ -63,6 +63,12 @@ public class ApiUtil {
                 "  \"messageChain\": %s\n}", targetQQ, JSONArray.toJSONString(qqMessages)));
     }
 
+    public boolean sendGroupMessage(String sessionKey, String targetQQ, List<QQMessage> qqMessages){
+        return doPost(sessionKey,"/sendGroupMessage",  String.format( "{\n" +
+                "  \"target\":%s,\n" +
+                "  \"messageChain\": %s\n}", targetQQ, JSONArray.toJSONString(qqMessages)));
+    }
+
     public boolean doPost(String sessionKey, String url, String body){
         //log.info("sendPost:" + url + "," + body);
         SurfHttpRequest r = new SurfHttpRequestBuilder(baseUrl + url, "POST").build();
