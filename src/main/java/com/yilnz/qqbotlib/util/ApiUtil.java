@@ -72,8 +72,12 @@ public class ApiUtil {
         if(page.getStatusCode() != 200){
             throw new MiraiError("doPost with url " + url + " return statusCode:" +page.getStatusCode());
         }
-        log.info("doPostResult:" + page.getHtml());
-        return code == 0;
+
+        boolean success = code == 0;
+        if(!success){
+            log.error("do post error:" + url + ":" + page.getHtml());
+        }
+        return success;
     }
 
     public int countMessage(String sessionKey){
