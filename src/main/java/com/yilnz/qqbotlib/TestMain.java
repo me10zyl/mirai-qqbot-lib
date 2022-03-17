@@ -1,5 +1,6 @@
 package com.yilnz.qqbotlib;
 
+import com.alibaba.fastjson.JSON;
 import com.yilnz.qqbotlib.entity.FriendMessage;
 import com.yilnz.qqbotlib.entity.QQMessage;
 
@@ -20,6 +21,7 @@ public class TestMain {
         qqbot.onMessageReceived(new QQMessageListener() {
             @Override
             public void onReceivedFirendMessage(FriendMessage friendMessage) {
+                System.out.println(JSON.toJSONString(friendMessage));
                 if(friendMessage.getMessage().equals("你好")){
                     List<QQMessage> qqMessages = new ArrayList<>();
                     qqMessages.add(QQMessage.textMessage("你好鸭！"));
