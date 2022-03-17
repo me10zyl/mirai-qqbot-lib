@@ -29,6 +29,7 @@ public class ApiUtil {
         SurfHttpRequest r = new SurfHttpRequestBuilder(baseUrl, "POST").build();
         r.setBody("{\"verifyKey\": \"" + verifyKey + "\"}");
         Page page = SurfSpider.create().addRequest(r).request().get(0);
+        log.info("newSession:" + page.getStatusCode());
         Integer code = page.getHtml().selectJson("$.code").getInt();
         if (code != 0) {
             String s = "创建session失败：" + page.getHtml().selectJson("$.message").get();
@@ -42,6 +43,7 @@ public class ApiUtil {
         SurfHttpRequest r = new SurfHttpRequestBuilder(baseUrl + "/bind", "POST").build();
         r.setBody("{\"sessionKey\": \"" + sessionKey + "\",\"qq\" : \""+ qq +"\"}");
         Page page = SurfSpider.create().addRequest(r).request().get(0);
+        log.info("bind:" + page.getStatusCode());
         Integer code = page.getHtml().selectJson("$.code").getInt();
         if (code != 0) {
             String s = "绑定session到qq号失败：" + page.getHtml().selectJson("$.message").get();
