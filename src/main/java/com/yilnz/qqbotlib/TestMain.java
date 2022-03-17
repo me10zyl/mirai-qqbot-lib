@@ -13,7 +13,10 @@ public class TestMain {
     public static void main(String[] args) throws IOException {
         Properties properties = new Properties();
         properties.load(TestMain.class.getClassLoader().getResourceAsStream("app.properties"));
-        QQBot qqbot = new QQBot(properties.getProperty("my.qq"), properties.getProperty("my.token"));
+        String property = properties.getProperty("my.qq");
+        String property1 = properties.getProperty("my.token");
+        System.out.println("QQBot stated:" + property + "," + property1);
+        QQBot qqbot = new QQBot(property, property1);
         qqbot.onMessageReceived(new QQMessageListener() {
             @Override
             public void onReceivedFirendMessage(FriendMessage friendMessage) {
