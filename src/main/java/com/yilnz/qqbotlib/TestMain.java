@@ -29,6 +29,7 @@ public class TestMain {
                 }
             }
         });
-        new Scanner(System.in).nextLine();
+        new Scanner(System.in).next();
+        qqbot.stop();
     }
 }
