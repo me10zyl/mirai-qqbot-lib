@@ -6,7 +6,6 @@ import com.yilnz.qqbotlib.entity.QQMessage;
 import com.yilnz.qqbotlib.services.FirendJsonHandler;
 import com.yilnz.qqbotlib.services.MsgJsonHandler;
 import com.yilnz.qqbotlib.util.ApiUtil;
-import com.yilnz.surfing.core.basic.PlainText;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -18,7 +17,6 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class QQBot {
     private ApiUtil apiUtil;
-    private String sessionKey;
     private ScheduledExecutorService messageThread;
     private List<MsgJsonHandler> msgJsonHandlerList;
 
@@ -27,26 +25,24 @@ public class QQBot {
     }
 
     public QQBot(String baseUrl, String qqNumber, String verifyKey) {
-        this.apiUtil = new ApiUtil(baseUrl);
-        this.sessionKey = apiUtil.newSession(verifyKey);
-        apiUtil.bind(this.sessionKey, qqNumber);
+        this.apiUtil = new ApiUtil(baseUrl, verifyKey, qqNumber);
         msgJsonHandlerList = new ArrayList<>();
         msgJsonHandlerList.add(new FirendJsonHandler());
     }
 
     public boolean sendFriendMessage(String targetQQ, List<QQMessage> qqMessageList){
-        return apiUtil.sendFriendMessage(sessionKey, targetQQ, qqMessageList);
+        return apiUtil.sendFriendMessage(targetQQ, qqMessageList);
     }
 
     public boolean sendGroupMessage(String targetQQ, List<QQMessage> qqMessageList){
-        return apiUtil.sendGroupMessage(sessionKey, targetQQ, qqMessageList);
+        return apiUtil.sendGroupMessage(targetQQ, qqMessageList);
     }
 
     public void stop(){
         if(messageThread != null){
             messageThread.shutdownNow();
         }
-        apiUtil.release(sessionKey);
+        apiUtil.release();
     }
 
     public void onMessageReceived(QQMessageListener listener){
@@ -57,10 +53,10 @@ public class QQBot {
                 @Override
                 public void run() {
                     try {
-                        int count = apiUtil.countMessage(sessionKey);
+                        int count = apiUtil.countMessage();
 //                        log.info("qqbot count message {}", count);
                         if(count > 0){
-                            String s = apiUtil.fetchMessage(sessionKey);
+                            String s = apiUtil.fetchMessage();
                             log.debug("fetched message {}", s);
                             JSONArray array = JSONArray.parseArray(s);
                             array.forEach(data->{

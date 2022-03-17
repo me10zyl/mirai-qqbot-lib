@@ -28,10 +28,6 @@ public class FirendJsonHandler implements MsgJsonHandler {
         });
         friendMessage.setSender(JSONObject.parseObject(json.selectJson("$.sender").get(), Sender.class));
         listener.onReceivedFirendMessage(friendMessage);
-
-
-
-
     }
 }
 
