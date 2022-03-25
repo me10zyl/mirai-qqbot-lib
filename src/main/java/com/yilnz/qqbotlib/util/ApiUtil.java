@@ -75,6 +75,7 @@ public class ApiUtil {
                     "  \"target\":%s,\n" +
                     "  \"messageChain\": %s\n}", targetQQ, JSONArray.toJSONString(qqMessages)), new AtomicInteger(0));
         }
+        log.debug("不是好友，不发消息:" + targetQQ + "," + qqMessages);
         return false;
     }
 
@@ -97,6 +98,9 @@ public class ApiUtil {
     }
 
     public void handleNewFriendRequestEvent(NewFriendRequestEventJson json){
+        if(json.getMessage() == null){
+            json.setMessage("");
+        }
         doPost("/resp/newFriendRequestEvent", JSON.toJSONString(json), new AtomicInteger(0));
     }
 
@@ -158,8 +162,12 @@ public class ApiUtil {
             throw new MiraiError(s);
         }
         String text = page.getHtml().selectJson("$.data").get();
-        log.debug("doGetList:" + text);
-        return JSONArray.parseArray(text,  tClass);
+         try {
+             return JSONArray.parseArray(text, tClass);
+         }catch (Exception e){
+             return JSONArray.parseArray("[" + text + "]", tClass);
+         }
+
     }
 
 
