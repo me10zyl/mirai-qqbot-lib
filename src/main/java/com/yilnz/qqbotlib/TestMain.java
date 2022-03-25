@@ -3,7 +3,7 @@ package com.yilnz.qqbotlib;
 import com.alibaba.fastjson.JSON;
 import com.yilnz.qqbotlib.entity.FriendMessage;
 import com.yilnz.qqbotlib.entity.QQMessage;
-import com.yilnz.qqbotlib.listeners.QQMessageListener;
+import com.yilnz.qqbotlib.listeners.QQEventListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public class TestMain {
         String property1 = properties.getProperty("my.token");
         System.out.println("QQBot stated:" + property + "," + property1);
         QQBot qqbot = new QQBot(property, property1);
-        qqbot.onMessageReceived(new QQMessageListener() {
+        qqbot.onMessageReceived(new QQEventListener() {
             @Override
             public void onReceivedFirendMessage(FriendMessage friendMessage) {
                 System.out.println("收到消息：" + JSON.toJSONString(friendMessage));

@@ -3,8 +3,7 @@ package com.yilnz.qqbotlib;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.yilnz.qqbotlib.entity.QQMessage;
-import com.yilnz.qqbotlib.listeners.Listener;
-import com.yilnz.qqbotlib.listeners.QQMessageListener;
+import com.yilnz.qqbotlib.listeners.QQEventListener;
 import com.yilnz.qqbotlib.services.FirendJsonHandler;
 import com.yilnz.qqbotlib.services.NewFriendRequestHandler;
 import com.yilnz.qqbotlib.services.MsgJsonHandler;
@@ -49,7 +48,7 @@ public class QQBot {
         apiUtil.release();
     }
 
-    public void onMessageReceived(Listener listener){
+    public void onMessageReceived(QQEventListener listener){
         if(messageThread == null) {
             messageThread = Executors.newSingleThreadScheduledExecutor();
             log.debug("qqbot start message receiving");
