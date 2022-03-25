@@ -29,7 +29,7 @@ public class FirendJsonHandler implements MsgJsonHandler {
             }
         });
         friendMessage.setSender(JSONObject.parseObject(json.selectJson("$.sender").get(), Sender.class));
-        if(friendMessage.getMessage() != null) {
+        if(friendMessage.getMessage() != null && listener instanceof QQMessageListener) {
             ((QQMessageListener)listener).onReceivedFirendMessage(friendMessage);
         }
     }

@@ -17,6 +17,9 @@ public class NewFriendRequestHandler implements MsgJsonHandler {
 
     @Override
     public void handle(String singleText, Listener listener, ApiUtil apiUtil) {
+        if(!(listener instanceof NewFriendRequestListener)){
+            return;
+        }
         NewFriendRequest friendRequest = new NewFriendRequest();
         Json d = new Json(singleText);
         friendRequest.setFromId(d.selectJson("$.fromId").get());
