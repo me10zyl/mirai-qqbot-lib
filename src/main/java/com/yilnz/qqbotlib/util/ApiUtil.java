@@ -7,6 +7,7 @@ import com.yilnz.qqbotlib.entity.NewFriendRequestHandleResult;
 import com.yilnz.qqbotlib.entity.QQFriend;
 import com.yilnz.qqbotlib.entity.QQMessage;
 import com.yilnz.qqbotlib.exception.MiraiError;
+import com.yilnz.qqbotlib.exception.NotQQFriendException;
 import com.yilnz.qqbotlib.httpjson.NewFriendRequestEventJson;
 import com.yilnz.surfing.core.SurfHttpRequest;
 import com.yilnz.surfing.core.SurfHttpRequestBuilder;
@@ -124,6 +125,9 @@ public class ApiUtil {
                 init();
                 return doPost(url, body, integer);
             }
+        }
+        if(code == 5){
+            throw new NotQQFriendException("不是QQ好友！");
         }
         return success;
     }
