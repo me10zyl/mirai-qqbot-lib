@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class NewFriendRequest {
-    private String eventId;
-    private String fromId;
-    private String groupId;
+    private Long eventId;
+    private Long fromId;
+    private Long groupId;
     private String nick;
     private String message;
 }

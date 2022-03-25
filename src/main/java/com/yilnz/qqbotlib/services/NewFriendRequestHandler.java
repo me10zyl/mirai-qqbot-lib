@@ -2,11 +2,14 @@ package com.yilnz.qqbotlib.services;
 
 import com.yilnz.qqbotlib.entity.NewFriendRequest;
 import com.yilnz.qqbotlib.entity.NewFriendRequestHandleResult;
+import com.yilnz.qqbotlib.entity.QQMessage;
 import com.yilnz.qqbotlib.httpjson.NewFriendRequestEventJson;
 import com.yilnz.qqbotlib.httpjson.NewFriendRequestOperateEnum;
 import com.yilnz.qqbotlib.listeners.QQEventListener;
 import com.yilnz.qqbotlib.util.ApiUtil;
 import com.yilnz.surfing.core.basic.Json;
+
+import java.util.List;
 
 public class NewFriendRequestHandler implements MsgJsonHandler {
     @Override
@@ -19,11 +22,11 @@ public class NewFriendRequestHandler implements MsgJsonHandler {
 
         NewFriendRequest friendRequest = new NewFriendRequest();
         Json d = new Json(singleText);
-        friendRequest.setFromId(d.selectJson("$.fromId").get());
+        friendRequest.setFromId(d.selectJson("$.fromId").getLong());
         friendRequest.setMessage(d.selectJson("$.message").get());
-        friendRequest.setEventId(d.selectJson("$.eventId").get());
+        friendRequest.setEventId(d.selectJson("$.eventId").getLong());
         friendRequest.setNick(d.selectJson("$.nick").get());
-        friendRequest.setGroupId(d.selectJson("$.groupId").get());
+        friendRequest.setGroupId(d.selectJson("$.groupId").getLong());
         NewFriendRequestHandleResult result = listener.onReceivedNewFriendRequest(friendRequest);
         if (result != null) {
             NewFriendRequestEventJson json = new NewFriendRequestEventJson();
@@ -33,6 +36,10 @@ public class NewFriendRequestHandler implements MsgJsonHandler {
             json.setOperate(result.isAccept() ? NewFriendRequestOperateEnum.AGREE : NewFriendRequestOperateEnum.REJECT);
             json.setMessage(result.getMessage());
             apiUtil.handleNewFriendRequestEvent(json);
+            List<QQMessage> qqMessageList = listener.postReceivedNewFriendRequest(friendRequest);
+            if(qqMessageList != null) {
+                apiUtil.sendFriendMessage(String.valueOf(friendRequest.getFromId()), qqMessageList);
+            }
         }
     }
 }

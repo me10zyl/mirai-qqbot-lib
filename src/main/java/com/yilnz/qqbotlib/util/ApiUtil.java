@@ -103,6 +103,7 @@ public class ApiUtil {
         //log.info("sendPost:" + url + "," + body);
         SurfHttpRequest r = new SurfHttpRequestBuilder(baseUrl + url, "POST").build();
         r.addHeader("sessionKey", sessionKey);
+        r.addHeader("Content-Type" , "application/json");
         r.setBody(body);
         Page page = SurfSpider.create().addRequest(r).request().get(0);
         Integer code = page.getHtml().selectJson("$.code").getInt();

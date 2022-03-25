@@ -24,7 +24,7 @@ public class TestMain {
         QQBot qqbot = new QQBot(property, property1);
         qqbot.onMessageReceived(new QQEventListener() {
             @Override
-            public void onReceivedFirendMessage(FriendMessage friendMessage) {
+            public void onReceivedFriendMessage(FriendMessage friendMessage) {
                 System.out.println("收到消息：" + JSON.toJSONString(friendMessage));
                 if(friendMessage.getMessage().equals("你好")){
                     List<QQMessage> qqMessages = new ArrayList<>();
