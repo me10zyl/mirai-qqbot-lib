@@ -69,6 +69,9 @@ public class ApiUtil {
     }
 
     public boolean sendFriendMessage(String targetQQ, List<QQMessage> qqMessages){
+        if(targetQQ.equals(qq)){
+            return false;
+        }
         return doPost("/sendFriendMessage",  String.format( "{\n" +
                 "  \"target\":%s,\n" +
                 "  \"messageChain\": %s\n}", targetQQ, JSONArray.toJSONString(qqMessages)), new AtomicInteger(0));
