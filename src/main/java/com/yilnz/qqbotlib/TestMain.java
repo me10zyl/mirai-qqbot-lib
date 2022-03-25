@@ -2,11 +2,14 @@ package com.yilnz.qqbotlib;
 
 import com.alibaba.fastjson.JSON;
 import com.yilnz.qqbotlib.entity.FriendMessage;
+import com.yilnz.qqbotlib.entity.NewFriendRequest;
+import com.yilnz.qqbotlib.entity.NewFriendRequestHandleResult;
 import com.yilnz.qqbotlib.entity.QQMessage;
 import com.yilnz.qqbotlib.listeners.QQEventListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
@@ -31,6 +34,19 @@ public class TestMain {
                     qqMessages.add(QQMessage.textMessage("你好鸭！"));
                     qqbot.sendFriendMessage(friendMessage.getSender().getId(), qqMessages);
                 }
+            }
+
+            @Override
+            public NewFriendRequestHandleResult onReceivedNewFriendRequest(NewFriendRequest request) {
+                System.out.println("收到好友请求：" + JSON.toJSONString(request));
+                NewFriendRequestHandleResult newFriendRequestHandleResult = new NewFriendRequestHandleResult();
+                newFriendRequestHandleResult.setAccept(true);
+                return newFriendRequestHandleResult;
+            }
+
+            @Override
+            public List<QQMessage> postReceivedNewFriendRequest(NewFriendRequest request) {
+                return Arrays.asList(QQMessage.textMessage("你好鸭！"));
             }
         });
         new Scanner(System.in).next();

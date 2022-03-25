@@ -67,7 +67,7 @@ public class QQBot {
                                 log.debug("start handle message type {}", type);
                                 msgJsonHandlerList.forEach(handler->{
                                     if(handler.support(type)){
-                                        log.debug("handle message {}", s);
+                                        log.debug("handle message {}", data.toString());
                                         handler.handle(data.toString(), listener, apiUtil);
                                     }
                                 });

@@ -11,6 +11,7 @@ import com.yilnz.surfing.core.basic.Json;
 
 import java.util.List;
 
+//[{"nick":"zSkyRaker","eventId":1648178457000000,"groupId":829987644,"type":"NewFriendRequestEvent","message":"","fromId":602077597}]
 public class NewFriendRequestHandler implements MsgJsonHandler {
     @Override
     public boolean support(String type) {
