@@ -69,14 +69,9 @@ public class ApiUtil {
     }
 
     public boolean sendFriendMessage(String targetQQ, List<QQMessage> qqMessages){
-        List<QQFriend> friendList = getFriendList();
-        if(friendList.stream().anyMatch(e->String.valueOf(e.getId()).equals(targetQQ))){
-            return doPost("/sendFriendMessage",  String.format( "{\n" +
-                    "  \"target\":%s,\n" +
-                    "  \"messageChain\": %s\n}", targetQQ, JSONArray.toJSONString(qqMessages)), new AtomicInteger(0));
-        }
-        log.debug("不是好友，不发消息:" + targetQQ + "," + qqMessages);
-        return false;
+        return doPost("/sendFriendMessage",  String.format( "{\n" +
+                "  \"target\":%s,\n" +
+                "  \"messageChain\": %s\n}", targetQQ, JSONArray.toJSONString(qqMessages)), new AtomicInteger(0));
     }
 
     public boolean sendGroupMessage( String targetQQ, List<QQMessage> qqMessages){
