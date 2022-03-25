@@ -104,7 +104,7 @@ public class ApiUtil {
     // base methods
 
     public boolean doPost(String url, String body, AtomicInteger integer){
-        //log.info("sendPost:" + url + "," + body);
+        log.debug("sendPost:" + url + ",body=" + body);
         SurfHttpRequest r = new SurfHttpRequestBuilder(baseUrl + url, "POST").build();
         r.addHeader("sessionKey", sessionKey);
         r.addHeader("Content-Type" , "application/json");
@@ -157,7 +157,9 @@ public class ApiUtil {
             }
             throw new MiraiError(s);
         }
-        return JSONArray.parseArray(page.getHtml().selectJson("$.data").get(),  tClass);
+        String text = page.getHtml().selectJson("$.data").get();
+        log.debug("doGetList:" + text);
+        return JSONArray.parseArray(text,  tClass);
     }
 
 
