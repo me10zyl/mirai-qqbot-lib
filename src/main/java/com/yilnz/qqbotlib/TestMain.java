@@ -41,6 +41,7 @@ public class TestMain {
                 System.out.println("收到好友请求：" + JSON.toJSONString(request));
                 NewFriendRequestHandleResult newFriendRequestHandleResult = new NewFriendRequestHandleResult();
                 newFriendRequestHandleResult.setAccept(true);
+                newFriendRequestHandleResult.setMessage("哈罗好");
                 return newFriendRequestHandleResult;
             }
 
