@@ -1,7 +1,7 @@
-package com.yilnz.qqbotlib;
+package com.yilnz.qqbotlib.listeners;
 
 import com.yilnz.qqbotlib.entity.FriendMessage;
 
-public interface QQMessageListener {
+public interface QQMessageListener extends Listener  {
     default void onReceivedFirendMessage(FriendMessage friendMessage){};
 }

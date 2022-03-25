@@ -1,9 +1,11 @@
 package com.yilnz.qqbotlib.services;
 
 import com.alibaba.fastjson.JSONObject;
-import com.yilnz.qqbotlib.QQMessageListener;
+import com.yilnz.qqbotlib.listeners.Listener;
+import com.yilnz.qqbotlib.listeners.QQMessageListener;
 import com.yilnz.qqbotlib.entity.FriendMessage;
 import com.yilnz.qqbotlib.entity.Sender;
+import com.yilnz.qqbotlib.util.ApiUtil;
 import com.yilnz.surfing.core.basic.Json;
 
 import java.util.Date;
@@ -14,7 +16,7 @@ public class FirendJsonHandler implements MsgJsonHandler {
     }
 
     @Override
-    public void handle(String singleText, QQMessageListener listener) {
+    public void handle(String singleText, Listener listener, ApiUtil apiUtil) {
         FriendMessage friendMessage = new FriendMessage();
         Json json = new Json(singleText);
         json.selectJson("$.messageChain").nodes().forEach(d->{
@@ -27,7 +29,9 @@ public class FirendJsonHandler implements MsgJsonHandler {
             }
         });
         friendMessage.setSender(JSONObject.parseObject(json.selectJson("$.sender").get(), Sender.class));
-        listener.onReceivedFirendMessage(friendMessage);
+        if(friendMessage.getMessage() != null) {
+            ((QQMessageListener)listener).onReceivedFirendMessage(friendMessage);
+        }
     }
 }
 

@@ -3,7 +3,9 @@ package com.yilnz.qqbotlib;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.yilnz.qqbotlib.entity.QQMessage;
+import com.yilnz.qqbotlib.listeners.QQMessageListener;
 import com.yilnz.qqbotlib.services.FirendJsonHandler;
+import com.yilnz.qqbotlib.services.NewFriendRequestHandler;
 import com.yilnz.qqbotlib.services.MsgJsonHandler;
 import com.yilnz.qqbotlib.util.ApiUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +30,7 @@ public class QQBot {
         this.apiUtil = new ApiUtil(baseUrl, verifyKey, qqNumber);
         msgJsonHandlerList = new ArrayList<>();
         msgJsonHandlerList.add(new FirendJsonHandler());
+        msgJsonHandlerList.add(new NewFriendRequestHandler());
     }
 
     public boolean sendFriendMessage(String targetQQ, List<QQMessage> qqMessageList){
@@ -65,7 +68,7 @@ public class QQBot {
                                 msgJsonHandlerList.forEach(handler->{
                                     if(handler.support(type)){
                                         log.debug("handle message {}", s);
-                                        handler.handle(data.toString(), listener);
+                                        handler.handle(data.toString(), listener, apiUtil);
                                     }
                                 });
                             });

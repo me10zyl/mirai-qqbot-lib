@@ -3,9 +3,11 @@ package com.yilnz.qqbotlib.util;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.yilnz.qqbotlib.entity.NewFriendRequestHandleResult;
 import com.yilnz.qqbotlib.entity.QQFriend;
 import com.yilnz.qqbotlib.entity.QQMessage;
 import com.yilnz.qqbotlib.exception.MiraiError;
+import com.yilnz.qqbotlib.httpjson.NewFriendRequestEventJson;
 import com.yilnz.surfing.core.SurfHttpRequest;
 import com.yilnz.surfing.core.SurfHttpRequestBuilder;
 import com.yilnz.surfing.core.SurfSpider;
@@ -88,6 +90,10 @@ public class ApiUtil {
 
     public void release() {
         doPost("/release", null, new AtomicInteger(0));
+    }
+
+    public void handleNewFriendRequestEvent(NewFriendRequestEventJson json){
+        doPost("/resp/newFriendRequestEvent", JSON.toJSONString(json), new AtomicInteger(0));
     }
 
 

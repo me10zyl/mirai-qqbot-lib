@@ -3,6 +3,7 @@ package com.yilnz.qqbotlib;
 import com.alibaba.fastjson.JSON;
 import com.yilnz.qqbotlib.entity.FriendMessage;
 import com.yilnz.qqbotlib.entity.QQMessage;
+import com.yilnz.qqbotlib.listeners.QQMessageListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
